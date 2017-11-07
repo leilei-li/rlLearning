@@ -72,17 +72,17 @@ def iterative_value_matrix(gridworld_matrix, feed_list):
     action_select_prod = feed_list[0]
     next_state = feed_list[1]
     action_reward = feed_list[2]
-    positions = ['north', 'south', 'west', 'east']
+    actions = ['north', 'south', 'west', 'east']
     next_gridworld_matrix = np.zeros((5, 5))
     for i in range(5):
         for j in range(5):
-            for position in positions:
-                next_position = next_state[i][j][position]
+            for action in actions:
+                next_position = next_state[i][j][action]
                 # accroding the random policy and its Bellman equation
                 next_point_x = next_position[0]
                 next_point_y = next_position[1]
-                next_gridworld_matrix[i][j] = next_gridworld_matrix[i][j] + action_select_prod[i][j][position] * (
-                    action_reward[i][j][position] + 0.9 * gridworld_matrix[next_point_x, next_point_y])
+                next_gridworld_matrix[i][j] = next_gridworld_matrix[i][j] + action_select_prod[i][j][action] * (
+                    action_reward[i][j][action] + 0.9 * gridworld_matrix[next_point_x, next_point_y])
     return next_gridworld_matrix
 
 
