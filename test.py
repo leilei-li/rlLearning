@@ -1,66 +1,19 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
-WORLD_SIZE = 4
-REWARD = -1.0
-ACTION_PROB = 0.25
+plt.figure()
+# 通过栅格的形式创建布局方式,(3,3)创建3x3的布局形式，(0,0)绘制的位置，0行0列的位置绘制
+# colspan:表示跨几列 rowspan:表示跨几行
+ax1 = plt.subplot2grid((1,2),(0,0))
+# 在ax1图中绘制一条坐标(1,1)到坐标(2,2)的线段
+ax1.plot([1, 2], [1, 2])
+# 设置ax1的标题  现在xlim、ylim、xlabel、ylabel等所有属性现在只能通过set_属性名的方法设置
+ax1.set_title('ax1_title')  # 设置小图的标题
+ax1.grid(True)
+ax1.set_xlabel('hah')
 
-world = np.zeros((WORLD_SIZE, WORLD_SIZE))
+ax2 = plt.subplot2grid((1,2),(0,1))
 
-# left, up, right, down
-actions = ['L', 'U', 'R', 'D']
+# 给对应的图绘制内容，这里只给ax4图绘制，属性通过set_xxx的模式设置
 
-nextState = []
-for i in range(0, WORLD_SIZE):
-    nextState.append([])
-    for j in range(0, WORLD_SIZE):
-        next = dict()
-        if i == 0:
-            next['U'] = [i, j]
-        else:
-            next['U'] = [i - 1, j]
-
-        if i == WORLD_SIZE - 1:
-            next['D'] = [i, j]
-        else:
-            next['D'] = [i + 1, j]
-
-        if j == 0:
-            next['L'] = [i, j]
-        else:
-            next['L'] = [i, j - 1]
-
-        if j == WORLD_SIZE - 1:
-            next['R'] = [i, j]
-        else:
-            next['R'] = [i, j + 1]
-
-        nextState[i].append(next)
-
-states = []
-for i in range(0, WORLD_SIZE):
-    for j in range(0, WORLD_SIZE):
-        if (i == 0 and j == 0) or (i == WORLD_SIZE - 1 and j == WORLD_SIZE - 1):
-            continue
-        else:
-            states.append([i, j])
-
-# for figure 4.1
-while True:
-    # keep iteration until convergence
-    newWorld = np.zeros((WORLD_SIZE, WORLD_SIZE))
-    for i, j in states:
-        for action in actions:
-            newPosition = nextState[i][j][action]
-            # bellman equation
-            newWorld[i, j] += ACTION_PROB * (REWARD + world[newPosition[0], newPosition[1]])
-            if i==1 and j==0:
-                a=newWorld[i][j]
-                b=world[newPosition[0], newPosition[1]]
-                x=newPosition[0]
-                y=newPosition[1]
-                print(a)
-    if np.sum(np.abs(world - newWorld)) < 1e-6:
-        print('Random Policy')
-        print(newWorld.round(1))
-        break
-    world = newWorld
+plt.show()
