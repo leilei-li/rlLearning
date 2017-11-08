@@ -29,9 +29,11 @@ def iteration_state_value_AND_optimal_policy(feed_dict):
     head_prob = feed_dict['head_prob']
     state_value = feed_dict['state_value']
     policy = feed_dict['policy']
+    rounds = 0
     # iteration state value
     while True:
-        delta = 0
+        theta = 0
+        rounds = rounds + 1
         for state in states[1:goal]:
             actions = np.arange(min(state, goal - state) + 1)  # choose how many coins heads
             value_list = []
@@ -39,11 +41,12 @@ def iteration_state_value_AND_optimal_policy(feed_dict):
                 current_value = head_prob * state_value[state + action] + (1 - head_prob) * state_value[state - action]
                 value_list.append(current_value)
             new_value = np.max(value_list)
-            delta = delta + np.abs(state_value[state] - new_value)
+            theta = theta + np.abs(state_value[state] - new_value)
             state_value[state] = new_value
-        if delta < 1e-6:
+        if theta < 1e-6:
+            print('after running: ', rounds)
             break
-    # caculate optimal_policy with the optimal state value matrix
+    # caculate optimal policy with the optimal state value matrix
     for state in states[1:goal]:
         actions = np.arange(min(state, goal - state) + 1)
         value_list = []
@@ -70,6 +73,7 @@ def draw_fig(state_value, states, policy):
     ax2.set_ylabel('final policy')
     ax2.scatter(states, policy)
     plt.show()
+
 
 def main():
     feed_dict = init_feed_dict()
