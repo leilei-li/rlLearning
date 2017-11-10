@@ -1,3 +1,6 @@
+'''
+Reference: https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter05/Blackjack.py
+'''
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -289,7 +292,7 @@ def monteCarloOffPolicy(nEpisodes):
             else:
                 importanceRatioAbove = 0.0
                 break
-        #just like on-policy iterative this game
+        # just like on-policy iterative this game
         importanceRatio = importanceRatioAbove / importanceRatioBelow
         sumOfImportanceRatio.append(sumOfImportanceRatio[-1] + importanceRatio)
         sumOfRewards.append(sumOfRewards[-1] + reward * importanceRatio)
@@ -325,7 +328,7 @@ def offPolicy():
     plt.plot(axisX, weightedSampling, label='Weighted Importance Sampling')
     plt.xlabel('Episodes')
     plt.ylabel('Mean square error')
-    plt.ylim(0,4)
+    plt.ylim(0, 4)
     plt.legend()
     plt.show()
 
