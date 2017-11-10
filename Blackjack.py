@@ -340,7 +340,7 @@ def offPolicy():
 
 
 if __name__ == "__main__":
-    # onPolicy()
-    figure5_3()
+    onPolicy()
+    # figure5_3()
     # offPolicy()
 
